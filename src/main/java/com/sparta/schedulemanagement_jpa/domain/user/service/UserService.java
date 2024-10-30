@@ -192,49 +192,4 @@ public class UserService {
         return userRepository.findByEmail(email)
             .orElseThrow(() -> new UserExceptions(NOT_FOUND_USER));
     }
-
-
-    // private User validateSignupRequest(SignupRequestDto signupRequestDto) {
-    //     //유저 이름
-    //     String username = signupRequestDto.getUsername();
-    //     if(username.length() > 4) {
-    //         throw new UserExceptions(NAME_TOO_LONG);
-    //     }
-    //     if(username.isEmpty()) {
-    //         throw new UserExceptions(USERNAME_REQUIRED);
-    //     }
-    //
-    //     //이메일
-    //     String email = signupRequestDto.getEmail();
-    //     if(email.isEmpty()) {
-    //         throw new UserExceptions(EMAIL_REQUIRED);
-    //     }
-    //     Optional<User> checkEmail = userRepository.findByEmail(email);
-    //     if (checkEmail.isPresent()) {
-    //         throw new UserExceptions(DUPLICATE_EMAIL);
-    //     }
-    //
-    //     String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
-    //     if(!email.matches(emailRegex)) {
-    //         throw new UserExceptions(INVALID_EMAIL_FORMAT);
-    //     }
-    //
-    //     //패스워드
-    //     if(signupRequestDto.getPassword().isEmpty() || signupRequestDto.getPassword().equals(" ")) {
-    //         throw new UserExceptions(PASSWORD_REQUIRED);
-    //     }
-    //     String password = passwordEncoder.encode(signupRequestDto.getPassword());
-    //
-    //     //권한
-    //     String role = signupRequestDto.getRole();
-    //     if (!(role.equals("ADMIN") || role.equals("USER"))) {
-    //         throw new UserExceptions(ROLE_REQUIRED);
-    //     }
-    //     UserRole userRole = UserRole.valueOf(role);
-    //
-    //     User user = new User(username, email, password, userRole);
-    //     userRepository.save(user);
-    //
-    //     return user;
-    // }
 }

@@ -22,10 +22,6 @@ public class ScheduleController {
 	private final ScheduleService scheduleService;
 	private final JwtUtil jwtUtil;
 
-	// public ScheduleController(ScheduleService scheduleService) {
-	//     this.scheduleService = scheduleService;
-	// }
-
 	@PostMapping("/{id}")
 	public ResponseEntity<ScheduleResponseDto> createSchedule(@Valid @PathVariable Long id,
 		@RequestBody ScheduleRequestDto requestDto) {
