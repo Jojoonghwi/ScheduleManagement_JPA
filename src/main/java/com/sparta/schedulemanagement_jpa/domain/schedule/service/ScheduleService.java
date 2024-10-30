@@ -8,14 +8,15 @@ import com.sparta.schedulemanagement_jpa.domain.schedule.controller.dto.Schedule
 import com.sparta.schedulemanagement_jpa.domain.schedule.controller.dto.ScheduleResponseDto;
 import com.sparta.schedulemanagement_jpa.domain.schedule.entity.Schedule;
 import com.sparta.schedulemanagement_jpa.domain.scheduleUser.entity.ScheduleUser;
-import com.sparta.schedulemanagement_jpa.domain.security.jwt.JwtUtil;
 import com.sparta.schedulemanagement_jpa.domain.user.entity.User;
 import com.sparta.schedulemanagement_jpa.domain.schedule.repository.ScheduleRepository;
 import com.sparta.schedulemanagement_jpa.domain.scheduleUser.repository.ScheduleUserRepository;
+import com.sparta.schedulemanagement_jpa.domain.user.entity.UserRole;
 import com.sparta.schedulemanagement_jpa.domain.user.repository.UserRepository;
 import com.sparta.schedulemanagement_jpa.domain.weather.sevice.WeatherService;
 import com.sparta.schedulemanagement_jpa.exception.customException.ScheduleExceptions;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,6 @@ public class ScheduleService {
     private final ScheduleRepository scheduleRepository;
     private final UserRepository userRepository;
     private final ScheduleUserRepository scheduleUserRepository;
-    private final JwtUtil jwtUtil;
     private final WeatherService weatherService;
 
     public ScheduleResponseDto createSchedule(Long userId, ScheduleRequestDto requestDto) {
@@ -72,13 +72,17 @@ public class ScheduleService {
     }
 
     @Transactional
-    public ScheduleResponseDto updateSchedule(Long scheduleId, String currentRole, String currentEmail, ScheduleRequestDto requestDto) {
+    public ScheduleResponseDto updateSchedule(Long scheduleId, HttpServletRequest request , ScheduleRequestDto requestDto) {
         // 해당 일정이 DB에 존재하는지 확인
         Schedule schedule = scheduleRepository.findById(scheduleId)
             .orElseThrow(() -> new ScheduleExceptions(NOT_FOUND_SCHEDULE));
 
+        //인증된 사용자 정보를 request에서 가져오기
+        String currentEmail = (String)request.getAttribute("email");
+        UserRole currentRole = (UserRole) request.getAttribute("role");
+
         // ADMIN 또는 작성자만 수정 가능 수정 가능
-        if (!currentRole.equals("ADMIN")) {
+        if (!currentRole.equals(UserRole.ADMIN)) {
             // currentEmail에 해당하는 User 조회
             User user = userRepository.findByEmail(currentEmail).orElseThrow(() -> new ScheduleExceptions(NOT_FOUND_USER));
 

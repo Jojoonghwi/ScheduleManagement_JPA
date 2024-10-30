@@ -6,10 +6,22 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Getter
-public class LoginRequestDto {
-	@Pattern(regexp = "^[A-Za-z0-9+_.-]+@(.+)$", message = "유효하지 않은 이메일 형식입니다.")
-	@NotBlank
+public class LoginRequestDto implements UserRequestDto {
 	private String email;
-
 	private String password;
+
+	@Override
+	public String getUsername() {
+		return null;
+	}
+
+	@Override
+	public String getRole() {
+		return null;
+	}
+
+	@Override
+	public String getConfirmPassword() {
+		return null;
+	}
 }

@@ -6,12 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
-public class SignupRequestDto {
+public class SignupRequestDto implements UserRequestDto {
 	private String username;
-
 	private String email;
-
 	private String password;
-
 	private String role;
+
+	@Override
+	public String getConfirmPassword() {
+		return null;
+	}
 }

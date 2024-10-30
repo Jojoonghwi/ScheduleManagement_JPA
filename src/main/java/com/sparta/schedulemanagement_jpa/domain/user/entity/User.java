@@ -1,6 +1,6 @@
 package com.sparta.schedulemanagement_jpa.domain.user.entity;
 
-import com.sparta.schedulemanagement_jpa.domain.user.controller.dto.UserRequestDto;
+import com.sparta.schedulemanagement_jpa.domain.user.controller.dto.UserUpdateRequestDto;
 import com.sparta.schedulemanagement_jpa.domain.scheduleUser.entity.ScheduleUser;
 import com.sparta.schedulemanagement_jpa.domain.Timestamped;
 
@@ -34,19 +34,19 @@ public class User extends Timestamped {
 
     @Column(name = "role", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private com.sparta.schedulemanagement_jpa.domain.user.entity.UserRole role;
+    private UserRole role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<ScheduleUser> ScheduleUserList = new ArrayList<>();
 
-    public User(String username, String email, String password, com.sparta.schedulemanagement_jpa.domain.user.entity.UserRole role) {
+    public User(String username, String email, String password, UserRole role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public void update(UserRequestDto requestDto) {
+    public void update(UserUpdateRequestDto requestDto) {
         this.username = requestDto.getUsername();
         this.email = requestDto.getEmail();
         this.password = requestDto.getPassword();

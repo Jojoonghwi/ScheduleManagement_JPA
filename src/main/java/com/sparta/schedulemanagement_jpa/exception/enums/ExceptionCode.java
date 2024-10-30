@@ -21,6 +21,7 @@ public enum ExceptionCode {
     //패스워드
     PASSWORD_REQUIRED(HttpStatus.BAD_REQUEST, "패스워드가 누락되었습니다"),
     NOT_MATCH_PASSWORD(HttpStatus.UNAUTHORIZED, "비밀번호가 맞지 않습니다"),
+    SAME_BEFORE_PASSWORD(HttpStatus.UNAUTHORIZED, "변경된 비밀번호가 이전과 같습니다"),
     //--------------------
 
     //권한
@@ -33,12 +34,12 @@ public enum ExceptionCode {
     //댓글
     NOT_FOUND_COMMENT(HttpStatus.NOT_FOUND, "댓글을 찾을 수 없습니다"),
 
-
+    //토큰
+    NOT_VALID_TOKEN(HttpStatus.UNAUTHORIZED, "인증 토큰이 잘못되었거나 누락되었습니다"),
 
     HAS_NOT_COOKIE(HttpStatus.BAD_REQUEST, "Request has not cookie"),
     NOT_SUPPORT_ENCODING_COOKIE(HttpStatus.BAD_REQUEST, "Not support encoding cookie"),
     HAS_NOT_TOKEN(HttpStatus.BAD_REQUEST, "Request has not token"),
-    NOT_VALID_TOKEN(HttpStatus.UNAUTHORIZED, "Not valid token"),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, "Token is expired"),
     NOT_SUPPORT_TOKEN(HttpStatus.UNAUTHORIZED, "Is not support token"),
     ;

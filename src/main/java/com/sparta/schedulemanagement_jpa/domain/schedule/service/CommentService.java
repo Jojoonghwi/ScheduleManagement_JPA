@@ -57,13 +57,13 @@ public class CommentService {
     }
 
     @Transactional
-    public Long updateComment(Long id, CommentRequestDto requestDto) {
+    public CommentResponseDto updateComment(Long id, CommentRequestDto requestDto) {
         // 해당 일정이 DB에 존재하는지 확인
         Comment comment = findComment(id);
 
         comment.update(requestDto);
 
-        return id;
+        return new CommentResponseDto(comment);
     }
 
     public Long deleteComment(Long id) {
