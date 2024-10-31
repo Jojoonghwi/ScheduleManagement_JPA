@@ -74,14 +74,13 @@ public class ScheduleService {
     @Transactional
     public ScheduleResponseDto updateSchedule(Long scheduleId, HttpServletRequest request , ScheduleRequestDto requestDto) {
         // 해당 일정이 DB에 존재하는지 확인
-        Schedule schedule = scheduleRepository.findById(scheduleId)
-            .orElseThrow(() -> new ScheduleExceptions(NOT_FOUND_SCHEDULE));
+        Schedule schedule = findSchedule(scheduleId);
 
         //인증된 사용자 정보를 request에서 가져오기
         String currentEmail = (String)request.getAttribute("email");
         UserRole currentRole = (UserRole) request.getAttribute("role");
 
-        // ADMIN 또는 작성자만 수정 가능 수정 가능
+        // ADMIN 또는 작성자만 수정 가능
         if (!currentRole.equals(UserRole.ADMIN)) {
             // currentEmail에 해당하는 User 조회
             User user = userRepository.findByEmail(currentEmail).orElseThrow(() -> new ScheduleExceptions(NOT_FOUND_USER));

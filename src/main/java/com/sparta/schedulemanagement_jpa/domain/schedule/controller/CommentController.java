@@ -1,8 +1,12 @@
 package com.sparta.schedulemanagement_jpa.domain.schedule.controller;
 
+import static org.springframework.data.jpa.domain.AbstractPersistable_.*;
+
 import com.sparta.schedulemanagement_jpa.domain.schedule.controller.dto.CommentRequestDto;
 import com.sparta.schedulemanagement_jpa.domain.schedule.controller.dto.CommentResponseDto;
 import com.sparta.schedulemanagement_jpa.domain.schedule.service.CommentService;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,16 +39,16 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDtos);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long id, @RequestBody CommentRequestDto requestDto) {
-        CommentResponseDto commentResponseDto = commentService.updateComment(id, requestDto);
+    @PutMapping("{CommentId}")
+    public ResponseEntity<CommentResponseDto> updateComment(@PathVariable Long CommentId, @RequestBody CommentRequestDto requestDto, HttpServletRequest request) {
+        CommentResponseDto commentResponseDto = commentService.updateComment(CommentId, requestDto, request);
 
         return ResponseEntity.status(HttpStatus.OK).body(commentResponseDto);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{CommentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Long deleteComment(@PathVariable Long id) {
-        return commentService.deleteComment(id);
+    public Long deleteComment(@PathVariable Long CommentId) {
+        return commentService.deleteComment(CommentId);
     }
 }
